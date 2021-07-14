@@ -1,21 +1,3 @@
-/*
-	TUIO C# Demo - part of the reacTIVision project
-	Copyright (c) 2005-2014 Martin Kaltenbrunner <martin@tuio.org>
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 
 using System;
 using System.Drawing;
@@ -99,17 +81,13 @@ public class TuioDemo : Form, TuioListener
 	}
 	private void calculate()
     {
-		///// if o.sybole == 0 and another number
-		///			count apple += number
-		/// if 11 && number
-		/// countapple -= number
 		isbacket = false;
 		 iseat = false;
 		 bucketsession = -1;
 		 eatsession = -1;
 		int totalapples = 0;
 		backgroundbrush = new SolidBrush(Color.White);
-		//eatsound.PlaySync();
+
 		foreach (TuioDemoObject tobject in objectList.Values)
 		{
 			if(tobject.SymbolID==0)
@@ -124,14 +102,14 @@ public class TuioDemo : Form, TuioListener
 				eatsession = tobject.SessionID;
 				Console.WriteLine("found a hourse");
 			}
-			else 
+			else if(!tobject.taken && isbacket)
             {
 				totalapples += tobject.SymbolID;
+				tobject.taken = true;
 			}
+			
 
 		}
-		Console.WriteLine(" 1  countable = " + countapple);
-	
 
 		if (isbacket && !iseat)
         {
@@ -142,23 +120,20 @@ public class TuioDemo : Form, TuioListener
 			countapple += totalapples;
 			message = "" + countapple;
 		}
-		else if(isbacket && iseat)
+		else if(isbacket && iseat && totalapples <= countapple)
 		{
-			if(totalapples<=countapple && totalapples>0)
-            {
 				countapple -= totalapples;
 				message = "" + countapple;
-				//	eatsound.PlaySync();
-			}
-			else if(totalapples>countapple)
-            {
-				backgroundbrush = new SolidBrush(Color.Red);
-				int remander = totalapples - countapple;
-				message = "collect " + remander + " more";
-            }
         }
-		
-			Console.WriteLine(" 2  countable = " + countapple);
+		else if(isbacket && iseat && totalapples > countapple)
+		{
+			backgroundbrush = new SolidBrush(Color.Red);
+			int remander = totalapples - countapple;
+			message = "collect " + remander + " more";
+		}
+	
+
+		Console.WriteLine(" 2  countable = " + countapple);
 	}
 	private void checkupsidedown()
     {
@@ -281,12 +256,9 @@ public class TuioDemo : Form, TuioListener
             {
 				objectList.Add(o.SessionID, pnn);
 			}
-           
-
-
-			calculate();
-			checkupsidedown();
-			getApplesReady();
+			//calculate();
+			//checkupsidedown();
+			//getApplesReady();
 		}
 		if (verbose) Console.WriteLine("add obj " + o.SymbolID + " (" + o.SessionID + ") " + o.X + " " + o.Y + " " + o.Angle);
 	}
@@ -301,14 +273,13 @@ public class TuioDemo : Form, TuioListener
 				{
 					tobject.getready();
 				}
-			//calculate();
-			//getApplesReady();
+			calculate();
 			checkupsidedown();
 			getApplesReady();
 		}
 		if (verbose)
         {
-			//			Console.WriteLine("set obj " + o.SymbolID + " " + o.SessionID + " " + o.X + " " + o.Y + " angle " + o.Angle + " " + o.MotionSpeed + " " + o.RotationSpeed + " " + o.MotionAccel + " " + o.RotationAccel);
+			//Console.WriteLine("set obj " + o.SymbolID + " " + o.SessionID + " " + o.X + " " + o.Y + " angle " + o.Angle + " " + o.MotionSpeed + " " + o.RotationSpeed + " " + o.MotionAccel + " " + o.RotationAccel);
 			Console.WriteLine("set obj " + o.SymbolID + " " + o.SessionID + " angle " + o.Angle );
 		}
 	}
@@ -319,6 +290,7 @@ public class TuioDemo : Form, TuioListener
 		{
 			objectList.Remove(o.SessionID);
 			calculate();
+			getApplesReady();
 		}
 		if (verbose) Console.WriteLine("del obj " + o.SymbolID + " (" + o.SessionID + ")");
 	}
