@@ -1,0 +1,6 @@
+D:\MSA\graduition project\summer practice\week 1\TUIO11_NET\bin\Debug\TuioDemo.exe
+D:\MSA\graduition project\summer practice\week 1\TUIO11_NET\bin\Debug\TuioDemo.pdb
+D:\MSA\graduition project\summer practice\week 1\TUIO11_NET\obj\Debug\TUIO_DEMO.csprojAssemblyReference.cache
+D:\MSA\graduition project\summer practice\week 1\TUIO11_NET\obj\Debug\TUIO_DEMO.csproj.CoreCompileInputs.cache
+D:\MSA\graduition project\summer practice\week 1\TUIO11_NET\obj\Debug\TuioDemo.exe
+D:\MSA\graduition project\summer practice\week 1\TUIO11_NET\obj\Debug\TuioDemo.pdb
