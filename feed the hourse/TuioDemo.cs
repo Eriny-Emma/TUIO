@@ -81,6 +81,8 @@ public class TuioDemo : Form, TuioListener
 	}
 	private void calculate()
     {
+		List<long> sessionIDstoIgnore = new List<long>();
+		bool ignore = false;
 		isbacket = false;
 		 iseat = false;
 		 bucketsession = -1;
@@ -102,38 +104,79 @@ public class TuioDemo : Form, TuioListener
 				eatsession = tobject.SessionID;
 				Console.WriteLine("found a hourse");
 			}
-			else if(!tobject.taken && isbacket)
-            {
+		}
+
+		foreach (TuioDemoObject tobject in objectList.Values)
+		{
+			if (!tobject.taken && isbacket && tobject.SymbolID<11)
+			{
 				totalapples += tobject.SymbolID;
-				tobject.taken = true;
+				sessionIDstoIgnore.Add(tobject.SessionID);
 			}
-			
-
 		}
 
-		if (isbacket && !iseat)
+		if (isbacket)
         {
-			if(totalapples>0)
-            {
-				collectsound.Play();
-            }
-			countapple += totalapples;
-			message = "" + countapple;
-		}
-		else if(isbacket && iseat && totalapples <= countapple)
-		{
-				countapple -= totalapples;
+			if(iseat)
+			{
+				if(totalapples<=countapple)
+                {//eat
+					countapple -= totalapples;
+					message = "" + countapple;
+					///// ignore
+					ignore = true;
+				}
+				else
+                { // not enogh to eat
+					backgroundbrush = new SolidBrush(Color.Red);
+					int remander = totalapples - countapple;
+					message = "collect " + remander + " more";
+				}
+			}
+            else
+            { // collect
+				if (totalapples > 0)
+				{
+					collectsound.Play();
+				}
+				countapple += totalapples;
 				message = "" + countapple;
+				///ignore
+				ignore = true;
+			}
         }
-		else if(isbacket && iseat && totalapples > countapple)
-		{
-			backgroundbrush = new SolidBrush(Color.Red);
-			int remander = totalapples - countapple;
-			message = "collect " + remander + " more";
-		}
+
+		if(ignore)
+        {
+            for (int i = 0; i < sessionIDstoIgnore.Count; i++)
+            {
+				objectList[sessionIDstoIgnore[i]].taken = true;
+
+			}
+        }
+			//if (isbacket && !iseat)
+	  //      { // collect
+			//	if(totalapples>0)
+	  //          {
+			//		collectsound.Play();
+	  //          }
+			//	countapple += totalapples;
+			//	message = "" + countapple;
+			//}
+			//else if(isbacket && iseat && totalapples <= countapple)
+			//{// eat
+			//		countapple -= totalapples;
+			//		message = "" + countapple;
+	  //      }
+			//else if(isbacket && iseat && totalapples > countapple)
+			//{// not enogh to eat
+			//	backgroundbrush = new SolidBrush(Color.Red);
+			//	int remander = totalapples - countapple;
+			//	message = "collect " + remander + " more";
+			//}
 	
 
-		Console.WriteLine(" 2  countable = " + countapple);
+		Console.WriteLine("    countapple = " + countapple + "total apples = " +totalapples);
 	}
 	private void checkupsidedown()
     {
@@ -155,6 +198,7 @@ public class TuioDemo : Form, TuioListener
 	private void getApplesReady()
     {
 		draw.Clear();
+		draw = new List<drawables>();
 		int Xpos = width/10;
 		int Ypos = height/10;
 		int size = height / 4;
@@ -289,9 +333,10 @@ public class TuioDemo : Form, TuioListener
 		lock (objectSync)
 		{
 			objectList.Remove(o.SessionID);
-			calculate();
-			getApplesReady();
+			//calculate();
+			//getApplesReady();
 		}
+		backgroundbrush = new SolidBrush(Color.White);
 		if (verbose) Console.WriteLine("del obj " + o.SymbolID + " (" + o.SessionID + ")");
 	}
 

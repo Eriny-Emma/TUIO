@@ -10,3 +10,15 @@ D:\MSA\graduition project\summer practice\week 1\feed the hourse\obj\Debug\TUIO_
 D:\MSA\graduition project\summer practice\week 1\feed the hourse\obj\Debug\TUIO_DEMO.csproj.CoreCompileInputs.cache
 D:\MSA\graduition project\summer practice\week 1\feed the hourse\obj\Debug\TuioDemo.exe
 D:\MSA\graduition project\summer practice\week 1\feed the hourse\obj\Debug\TuioDemo.pdb
+C:\Users\emmad\Source\Repos\TUIO\feed the hourse\bin\Debug\TuioDemo.exe
+C:\Users\emmad\Source\Repos\TUIO\feed the hourse\bin\Debug\TuioDemo.pdb
+C:\Users\emmad\Source\Repos\TUIO\feed the hourse\obj\Debug\TUIO_DEMO.csprojAssemblyReference.cache
+C:\Users\emmad\Source\Repos\TUIO\feed the hourse\obj\Debug\TUIO_DEMO.csproj.CoreCompileInputs.cache
+C:\Users\emmad\Source\Repos\TUIO\feed the hourse\obj\Debug\TuioDemo.exe
+C:\Users\emmad\Source\Repos\TUIO\feed the hourse\obj\Debug\TuioDemo.pdb
+D:\MSA\graduition project\summer practice\week 1\stable\feed the hourse\bin\Debug\TuioDemo.exe
+D:\MSA\graduition project\summer practice\week 1\stable\feed the hourse\bin\Debug\TuioDemo.pdb
+D:\MSA\graduition project\summer practice\week 1\stable\feed the hourse\obj\Debug\TUIO_DEMO.csprojAssemblyReference.cache
+D:\MSA\graduition project\summer practice\week 1\stable\feed the hourse\obj\Debug\TUIO_DEMO.csproj.CoreCompileInputs.cache
+D:\MSA\graduition project\summer practice\week 1\stable\feed the hourse\obj\Debug\TuioDemo.exe
+D:\MSA\graduition project\summer practice\week 1\stable\feed the hourse\obj\Debug\TuioDemo.pdb
