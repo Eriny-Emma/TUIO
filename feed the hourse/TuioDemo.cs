@@ -44,7 +44,7 @@ public class TuioDemo : Form, TuioListener
 	long eatsession = -1;
 
 	System.Media.SoundPlayer collectsound = new System.Media.SoundPlayer("collect.wav");
-	System.Media.SoundPlayer eatsound = new System.Media.SoundPlayer("eat2.wav");
+	System.Media.SoundPlayer eatsound = new System.Media.SoundPlayer("crunch.wav");
 	System.Media.SoundPlayer fallsound = new System.Media.SoundPlayer("fall.wav");
 
 	string message= "";
@@ -85,7 +85,7 @@ public class TuioDemo : Form, TuioListener
 		bool ignore = false;
 		isbacket = false;
 		 iseat = false;
-		 bucketsession = -1;
+		bucketsession = -1;
 		 eatsession = -1;
 		int totalapples = 0;
 		backgroundbrush = new SolidBrush(Color.White);
@@ -111,8 +111,6 @@ public class TuioDemo : Form, TuioListener
 					sessionIDstoIgnore.Add(tobject.SessionID);
 			}
 		}
-		
-
 
 		if (isbacket)
         {
@@ -125,6 +123,7 @@ public class TuioDemo : Form, TuioListener
 					message = "" + countapple;
 					if(totalapples>0)
                     {
+						eatsound.Play();
 						///eat sound
                     }
 					ignore = true;
@@ -156,25 +155,28 @@ public class TuioDemo : Form, TuioListener
 
 			}
         }
-	
-
 		Console.WriteLine("    countapple = " + countapple + "total apples = " +totalapples);
 	}
 	private void checkupsidedown()
     {
 		//1.6 4.5
-		if (isbacket)
+		if (isbacket && bucketsession!=-1 )
 		{
-			if (objectList[bucketsession].Angle >= 1.6 &&
-			objectList[bucketsession].Angle <= 4.5)
-			{
-				if(countapple>0)
-                {
-					fallsound.Play();
+			TuioDemoObject obj;
+			if(objectList.TryGetValue(bucketsession, out obj))
+            {
+				if (objectList[bucketsession].Angle >= 1.6 &&
+				objectList[bucketsession].Angle <= 4.5)
+				{
+					if (countapple > 0)
+					{
+						fallsound.Play();
+					}
+					countapple = 0;
+
 				}
-				countapple = 0;
-			
 			}
+		
 		}
 	}
 	private void getApplesReady()
@@ -310,7 +312,13 @@ public class TuioDemo : Form, TuioListener
 	{
 		lock (objectSync)
 		{
+			if(o.SymbolID==0)
+            {
+				isbacket = false;
+				bucketsession = -1;
+			}
 			objectList.Remove(o.SessionID);
+
 		}
 		backgroundbrush = new SolidBrush(Color.White);
 		if (verbose) Console.WriteLine("del obj " + o.SymbolID + " (" + o.SessionID + ")");
